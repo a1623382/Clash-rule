@@ -2,5 +2,7 @@ DOMAIN-SUFFIX, ubisoft-uplay-savegames.s3.amazonaws.com
 DOMAIN-SUFFIX, public-ubiservices.ubi.com
 DOMAIN-KEYWORD,forhonor
 DOMAIN-SUFFIX,s3.amazonaws.com
+DOMAIN-SUFFIX,client.easyanticheat.ne
+DOMAIN-KEYWORD,ubi
 DOMAIN-KEYWORD,public-ws-ubiservices.ubi.com
 DOMAIN-KEYWORD,msr-public-ubiservices.ubi.com
