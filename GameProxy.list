@@ -1,5 +1,6 @@
-DOMAIN-SUFFIX, ubisoft-uplay-savegames.s3.amazonaws.com
-DOMAIN-SUFFIX, public-ubiservices.ubi.com
+DOMAIN-SUFFIX,ubisoft-uplay-savegames.s3.amazonaws.com
+DOMAIN-SUFFIX,ubisoft-orbit-savegames.s3.amazonaws.com
+DOMAIN-SUFFIX,public-ubiservices.ubi.com
 DOMAIN-SUFFIX,s3.amazonaws.com
 DOMAIN-SUFFIX,client.easyanticheat.ne
 DOMAIN-KEYWORD,public-ws-ubiservices.ubi.com
@@ -15,6 +16,7 @@ DOMAIN-SUFFIX,public-ws-ubiservices.ubi.com
 DOMAIN-SUFFIX,msr-public-ubiservices.ubi.com
 DOMAIN-SUFFIX,mercury.ubi.com
 DOMAIN-SUFFIX,d20i5e3rqc90ne.cloudfront.net
-DOMAIN-KEYWORD,forhonor
-DOMAIN-KEYWORD,r6
-DOMAIN-KEYWORD,ubi
+DOMAIN-SUFFIX,items.forhonor.ubisoft.com
+DOMAIN-SUFFIX,mgw-livepc-2.forhonor.ubisoft.com
+DOMAIN-SUFFIX,playlists-2.forhonor.ubisoft.com
+DOMAIN-SUFFIX,metagame.forhonor.ubisoft.com
