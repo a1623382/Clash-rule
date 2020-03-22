@@ -107,22 +107,6 @@ dns:
 #   DoT: 以 tls:// 开头的 DNS 服务器。拥有更高的安全性和查询效率，但端口有可能被管制或封锁。
 #   若要了解更多关于 DoH/DoT 相关技术，请自行查阅规范文档。
 
-# 代理组
-# 下面这3个不要引到订阅里去 要不会出错
-# Will be ignored after profile selection
-Proxy:
-  - name: Shadowsocks
-    type: socks5
-    server: 127.0.0.1
-    port: 1080
-Proxy Group:
-  - name: Proxy
-    type: select
-    proxies:
-      - Shadowsocks
-Rule:
-  - 'MATCH,DIRECT'
-
 # Clash for Windows
 # Proxies module latency test settings
 cfw-latency-timeout: 3000
