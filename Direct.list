@@ -1,4 +1,5 @@
 DOMAIN-SUFFIX,gd.uud.me
 DOMAIN-SUFFIX,clash.razord.top
 DOMAIN-SUFFIX,yacd.haishan.me
-DOMAIN-SUFFIX,analytics.ff.avast.com
+IP-CIDR,108.177.97.188/8
+IP-CIDR,52.220.200.42/8
