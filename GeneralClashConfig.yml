@@ -133,7 +133,7 @@ cfw-latency-url: http://www.gstatic.com/generate_204
 #cfw-profile-mixin:
   #dns:
     #enable: true
-    #listen: 0.0.0.0:53
+    #listen: :53
     #enhanced-mode: fake-ip
     #nameserver:
      #- 223.5.5.5 # 阿里DNS
