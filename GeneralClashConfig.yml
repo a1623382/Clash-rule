@@ -122,8 +122,6 @@ Proxy Group:
     type: select
     proxies:
       - Shadowsocks
-Rule:
-  - 'MATCH,DIRECT'
 
 # Clash for Windows
 # Proxies module latency test settings
