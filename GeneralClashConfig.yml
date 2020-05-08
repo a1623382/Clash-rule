@@ -160,7 +160,7 @@ cfw-proxies-order:
   #default #按配置文件定义节点排序
   latency #按节点延迟升序排列
   #alphabet #按节点名称字母表排列
-  
+
 # 定义状态栏图标
 #cfw-tray-icon:
 #default: .\resources\static\imgs\logo_64.png        # 默认图标
