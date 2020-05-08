@@ -33,11 +33,11 @@ external-controller: '127.0.0.1:9090'
 
 # 您可以将静态网页资源（如 clash-dashboard）放置在一个目录中，clash 将会服务于 `RESTful API/ui`
 # 参数应填写配置目录的相对路径或绝对路径。
- http://127.0.0.1:9090/ui/#/
- external-ui: folder
- yacd面板：  https://github.com/haishanh/yacd
- Razord面板：http://clash.razord.top/#/proxies
- external-ui: dashboard
+# http://127.0.0.1:9090/ui/#/
+# external-ui: folder
+# yacd面板：  https://github.com/haishanh/yacd
+# Razord面板：http://clash.razord.top/#/proxies
+# external-ui: dashboard
 
 # RESTful API 的口令 (可选)
 # secret: ""
