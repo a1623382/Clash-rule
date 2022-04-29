@@ -1,3 +1,5 @@
 DOMAIN-SUFFIX,a1623382.ml
 PROCESS-NAME,upc.exe
 PROCESS-NAME,UplayWebCore.exe
+PROCESS-NAME,XboxPcApp.exe
+PROCESS-NAME,XboxAppServices.exe
