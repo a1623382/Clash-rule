@@ -71,7 +71,9 @@ dns:
   fake-ip-filter: # fake ip 白名单列表，如果你不知道这个参数的作用，请勿修改
      - '*.lan'
      - localhost.ptlogin2.qq.com
-  #nameserver:
+  nameserver:
+     - https://a1623382.a162338.ml/dns-query
+     - tls://a1623382.a1623382.ml:853
      #- 223.5.5.5 # 阿里DNS
      #- 180.76.76.76 # 百度DNS
      #- 119.29.29.29 # 腾讯DNS
