@@ -10,3 +10,4 @@ PROCESS-NAME,UplayWebCore.exe
 PROCESS-NAME,XboxPcApp.exe
 PROCESS-NAME,XboxAppServices.exe
 PROCESS-NAME,tv.danmaku.bili
+IP-CIDR,132.145.93.214/32
