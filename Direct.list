@@ -5,6 +5,7 @@ DOMAIN-SUFFIX,time2.google.com
 DOMAIN-SUFFIX,time1.google.com
 DOMAIN-SUFFIX,time.cloudflare.com
 DOMAIN-SUFFIX,nopecha.com
+DOMAIN-SUFFIX,pc521.net
 DOMAIN-SUFFIX,zxzj.vip
 PROCESS-NAME,upc.exe
 PROCESS-NAME,UplayWebCore.exe
