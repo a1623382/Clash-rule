@@ -94,10 +94,13 @@ dns:
   enable: true # 是否启用dns false
   ipv6: true
   listen: 0.0.0.0:53
-  enhanced-mode: fake-ip # 模式：redir-host或fake-ip
+  enhanced-mode: redir-host          #DNS模式(redir-host/fake-ip)
+                                     #【Meta专属】redir-host传递域名，可远程解析
   fake-ip-range: 198.18.0.1/16 #
   fake-ip-filter: # fake ip 白名单列表，如果你不知道这个参数的作用，请勿修改
      - '*.lan'
+     - '*.linksys.com'
+     - '+.pool.ntp.org'
      - localhost.ptlogin2.qq.com
   #nameserver:
      #- 223.5.5.5 # 阿里DNS
