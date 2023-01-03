@@ -94,7 +94,7 @@ dns:
   enable: true # 是否启用dns false
   ipv6: true
   listen: 0.0.0.0:53
-  enhanced-mode: redir-host          #DNS模式(redir-host/fake-ip)
+  enhanced-mode: fake-ip          #DNS模式(redir-host/fake-ip)
                                      #【Meta专属】redir-host传递域名，可远程解析
   fake-ip-range: 198.18.0.1/16 #
   fake-ip-filter: # fake ip 白名单列表，如果你不知道这个参数的作用，请勿修改
@@ -102,24 +102,22 @@ dns:
      - '*.linksys.com'
      - '+.pool.ntp.org'
      - localhost.ptlogin2.qq.com
-  #nameserver:
-     #- 223.5.5.5 # 阿里DNS
-     #- 180.76.76.76 # 百度DNS
-     #- 119.29.29.29 # 腾讯DNS
-     #- 117.50.11.11 # ONE DNS拦截版 恶意网站拦截、广告过滤
-     #- 117.50.10.10 # ONE DNS纯净版 直接返回其真实的响应结果
-     #- 114.114.114.114 # 114DNS
-     #- https://dns.alidns.com/dns-query # 阿里 DoH DNS
-     #- https://doh.360.cn/dns-query # 360 DoH DNS
+  nameserver:
+    - tls://223.5.5.5:853 # 阿里 DNS over TLS
+    - tls://dot.pub # 腾讯 DNS over TLS
+    - https://doh.pub/dns-query # DNS over HTTPS
+    - https://dns.alidns.com/dns-query#h3=true #【Meta专属】强制HTTP/3
+    - https://mozilla.cloudflare-dns.com/dns-query#h3=true #【Meta专属】指定策略组和使用 HTTP/3
+    - quic://dns.adguard.com:784 # DNS over QUIC
   fallback:
-     - 8.8.8.8 # 谷歌DNS
-     - 1.1.1.1 # Cloudflare DNS
      - tls://dns.rubyfish.cn:853
      - tls://1.0.0.1:853
      - tls://dns.google:853
      - https://dns.rubyfish.cn/dns-query
      - https://cloudflare-dns.com/dns-query
      - https://dns.google/dns-query
+     - quic://a.passcloud.xyz:784     #【Meta专属】Dns over quic
+
   fallback-filter:                   #回落DNS服务器过滤
     geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
     geoip-code: CN                   #geoip匹配区域设定
