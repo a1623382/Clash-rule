@@ -25,7 +25,7 @@ bind-address: "*"
 ipv6: true
 
 # 规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
-# mode: rule
+mode: rule
 
 # 设置日志输出级别 (默认级别：silent，即不输出任何内容，以避免因日志内容过大而导致程序内存溢出）。
 # 5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
@@ -71,9 +71,7 @@ dns:
   fake-ip-filter: # fake ip 白名单列表，如果你不知道这个参数的作用，请勿修改
      - '*.lan'
      - localhost.ptlogin2.qq.com
-  nameserver:
-     - https://a1623382.a162338.ml/dns-query
-     - tls://a1623382.a1623382.ml:853
+  #nameserver:
      #- 223.5.5.5 # 阿里DNS
      #- 180.76.76.76 # 百度DNS
      #- 119.29.29.29 # 腾讯DNS
@@ -184,7 +182,7 @@ cfw-conn-break-strategy:
 #  latency：按节点延迟升序排列
 #  alphabet：按节点名称字母表排列
 # Sort proxies in Proxies module by default/latency/alphabet
-cfw-proxies-order: default
+cfw-proxies-order: latency
 
 # 子进程 启动其他应用
 # Run child process after CFW started
@@ -278,7 +276,6 @@ cfw-bypass:
   - "*ccgslb*"
   - "*chinacache*"
   - "*duobao*"
-  - "*duolingo*"
   - "*jdpay*"
   - "*moke*"
   - "*qhimg*"
@@ -372,13 +369,29 @@ cfw-bypass:
   - "*.battlenet.com"
   - "*.blizzard.com"
   # ByteDance
+  - "*.amemv.com"
+  - "*.bdxiguaimg.com"
+  - "*.bdxiguastatic.com"
+  - "*.byted-static.com"
   - "*.bytedance.com"
   - "*.bytedance.net"
   - "*.bytedns.net"
+  - "*.bytednsdoc.com"
+  - "*.bytegoofy.com"
   - "*.byteimg.com"
+  - "*.bytescm.com"
+  - "*.bytetos.com"
+  - "*.bytexservice.com"
+  - "*.douyin.com"
+  - "*.douyinpic.com"
+  - "*.douyinstatic.com"
+  - "*.douyinvod.com"
+  - "*.feelgood.cn"
   - "*.feiliao.com"
   - "*.gifshow.com"
   - "*.huoshan.com"
+  - "*.huoshanzhibo.com"
+  - "*.ibytedapm.com"
   - "*.iesdouyin.com"
   - "*.ixigua.com"
   - "*.kspkg.com"
@@ -416,6 +429,7 @@ cfw-bypass:
   - "*.douyutv.com"
   # Epic
   - "*.epicgames.com"
+  - "*.epicgames.dev"
   - "*.helpshift.com"
   - "*.paragon.com"
   - "*.unrealengine.com"
@@ -503,10 +517,16 @@ cfw-bypass:
   - "*.leju.com"
   - "*.miaopai.com"
   - "*.sina.com"
+  - "*.sina.com.cn"
+  - "*.sina.cn"
   - "*.sinaapp.com"
+  - "*.sinaapp.cn"
   - "*.sinaimg.com"
+  - "*.sinaimg.cn"
   - "*.weibo.com"
+  - "*.weibo.cn"
   - "*.weibocdn.com"
+  - "*.weibocdn.cn"
   - "*.xiaoka.tv"
   # Sohu Sogo
   - "*.go2map.com"
@@ -685,8 +705,6 @@ cfw-bypass:
   - "*.clouddn.com"
   - "*.cloudxns.net"
   - "*.cn163.net"
-  - "*.cnbeta.com"
-  - "*.cnbetacdn.com"
   - "*.cnblogs.com"
   - "*.cnki.net"
   - "*.cnmstl.net"
