@@ -24,8 +24,8 @@ log-level: info            #日志等级（info/warning/error/debug/silent）
 
 ipv6: true                #ip6开关，当为false时，停止解析hostanmes为ip6地址
 
-external-controller: 127.0.0.1:9090   #控制器监听地址
-external-ui: folder                   #http服务路径，可以放静态web网页，如yacd的控制面板
+# external-controller: 127.0.0.1:9090   #控制器监听地址
+# external-ui: folder                   #http服务路径，可以放静态web网页，如yacd的控制面板
                                       #可通过`http://{{external-controller}}/ui`直接使用
 # secret: ""                          #控制器登录密码
 
