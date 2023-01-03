@@ -58,6 +58,30 @@ experimental:
 # authentication:
 #  - "user1:pass1"
 #  - "user2:pass2"
+profile:                   #缓存设置(文件位置./cache.db)
+  store-selected: false    #节点状态记忆（若不同配置有同代理名称,设置值共享）
+  store-fake-ip: true      #fake-ip缓存
+  
+sniffer:                         #【Meta专属】sniffer域名嗅探器
+  enable: true                   #嗅探开关
+  sniffing:                      #嗅探协议对象：目前支持tls/http
+    - tls
+    - http
+  skip-domain:                   #列表中的sni字段，保留mapping结果，不通过嗅探还原域名
+                                 #优先级比force-domain高
+    - 'Mijia Cloud'              #米家设备，建议加
+    - 'dlg.io.mi.com'
+    - '+.apple.com'              #苹果域名，建议加
+  # - '*.baidu.com'              #支持通配符
+    
+  force-domain:                  #需要强制嗅探的域名，默认只对IP嗅探
+  # - '+'                        #去掉注释后等于全局嗅探
+    - 'google.com'
+    
+  #port-whitelist:               #端口白名单，只对名单内的端口进行还原域名
+  # - 80
+  # - 443
+  # - 8000-9000
 
 # 实验性功能 hosts, 支持通配符 (例如 *.clash.dev 甚至 *.foo.*.example.com)
 # 静态的域名 比 通配域名 具有更高的优先级 (foo.example.com 优先于 *.example.com)
@@ -93,10 +117,17 @@ dns:
      - https://dns.rubyfish.cn/dns-query
      - https://cloudflare-dns.com/dns-query
      - https://dns.google/dns-query
-  fallback-filter:
-     geoip: true # 默认
-     ipcidr: # 在这个网段内的 IP 地址会被考虑为被污染的 IP
-       - 240.0.0.0/4
+  fallback-filter:                   #回落DNS服务器过滤
+    geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
+    geoip-code: CN                   #geoip匹配区域设定
+    geosite:                         #【Meta专属】设定geosite某分类使用fallback返回结果
+      - gfw
+    ipcidr:                          #列表中的ip使用fallback返回解析结果
+      - 240.0.0.0/4
+    domain:                          #列表中的域名使用fallback返回解析结果
+      - '+.google.com'
+      - '+.facebook.com'
+      - '+.youtube.com'
 
 # 1. clash DNS 请求逻辑：
 #   (1) 当访问一个域名时， nameserver 与 fallback 列表内的所有服务器并发请求，得到域名对应的 IP 地址。
