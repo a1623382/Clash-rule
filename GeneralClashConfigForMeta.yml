@@ -582,6 +582,8 @@ cfw-bypass:
   - "*.sony.com"
   - "*.sonyentertainmentnetwork.com"
   # SteamCN
+  - "*.steamserver.net"
+  - "api.steampowered.com"
   - "*.cm.steampowered.com"
   - "*.steamcontent.com"
   - "*.steamusercontent.com"
