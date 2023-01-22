@@ -102,6 +102,19 @@ dns:
      - '*.linksys.com'
      - '+.pool.ntp.org'
      - localhost.ptlogin2.qq.com
+     - +.stun.*.*
+     - +.stun.*.*.*
+     - +.stun.*.*.*.*
+     - +.stun.*.*.*.*.*
+     - lens.l.google.com
+     - '*.n.n.srv.nintendo.net'
+     - +.stun.playstation.net
+     - xbox.*.*.microsoft.com
+     - '*.*.xboxlive.com'
+     - '*.msftncsi.com'
+     - '*.msftconnecttest.com'
+     - '*.mcdn.bilivideo.cn'
+     - WORKGROUP
   nameserver:
     - tls://223.5.5.5:853 # 阿里 DNS over TLS
     - tls://dot.pub # 腾讯 DNS over TLS
@@ -109,6 +122,7 @@ dns:
     - https://dns.alidns.com/dns-query#h3=true #【Meta专属】强制HTTP/3
     - https://mozilla.cloudflare-dns.com/dns-query#h3=true #【Meta专属】指定策略组和使用 HTTP/3
     - quic://dns.adguard.com:784 # DNS over QUIC
+    - dhcp://system
   fallback:
      - tls://dns.rubyfish.cn:853
      - tls://1.0.0.1:853
@@ -129,6 +143,11 @@ dns:
       - '+.google.com'
       - '+.facebook.com'
       - '+.youtube.com'
+  default-nameserver:
+      - 223.5.5.5
+      - 119.29.29.29
+      - 8.8.4.4
+      - 1.0.0.1
 
 # 1. clash DNS 请求逻辑：
 #   (1) 当访问一个域名时， nameserver 与 fallback 列表内的所有服务器并发请求，得到域名对应的 IP 地址。
