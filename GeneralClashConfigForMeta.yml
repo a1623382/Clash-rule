@@ -78,10 +78,10 @@ sniffer:                         #【Meta专属】sniffer域名嗅探器
   # - '+'                        #去掉注释后等于全局嗅探
     - 'google.com'
     
-  #port-whitelist:               #端口白名单，只对名单内的端口进行还原域名
-  # - 80
-  # - 443
-  # - 8000-9000
+  port-whitelist:               #端口白名单，只对名单内的端口进行还原域名
+   - 80
+   - 443
+   - 8000-9000
 
 # 实验性功能 hosts, 支持通配符 (例如 *.clash.dev 甚至 *.foo.*.example.com)
 # 静态的域名 比 通配域名 具有更高的优先级 (foo.example.com 优先于 *.example.com)
@@ -94,7 +94,7 @@ dns:
   enable: true # 是否启用dns false
   ipv6: true
   listen: 0.0.0.0:53
-  enhanced-mode: fake-ip          #DNS模式(redir-host/fake-ip)
+  enhanced-mode: redir-host         #DNS模式(redir-host/fake-ip)
                                      #【Meta专属】redir-host传递域名，可远程解析
   fake-ip-range: 198.18.0.1/16 #
   fake-ip-filter: # fake ip 白名单列表，如果你不知道这个参数的作用，请勿修改
@@ -148,6 +148,7 @@ dns:
       - 119.29.29.29
       - 8.8.4.4
       - 1.0.0.1
+  use-hosts: true
 
 # 1. clash DNS 请求逻辑：
 #   (1) 当访问一个域名时， nameserver 与 fallback 列表内的所有服务器并发请求，得到域名对应的 IP 地址。
