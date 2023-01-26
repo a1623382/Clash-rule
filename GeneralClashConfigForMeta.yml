@@ -125,12 +125,12 @@ dns:
     - dhcp://system
   fallback:
      - tls://dns.rubyfish.cn:853
-     - tls://1.0.0.1:853#🔰 节点选择
-     - tls://dns.google:853#🔰 节点选择
-     - https://dns.rubyfish.cn/dns-query
-     - https://cloudflare-dns.com/dns-query#🔰 节点选择
-     - https://dns.google/dns-query#🔰 节点选择
      - quic://a.passcloud.xyz:784     #【Meta专属】Dns over quic
+     - https://dns.rubyfish.cn/dns-query
+     - https://cloudflare-dns.com/dns-query
+     - https://dns.google/dns-query
+     - tls://1.0.0.1:853
+     - tls://dns.google:853
 
   fallback-filter:                   #回落DNS服务器过滤
     geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
