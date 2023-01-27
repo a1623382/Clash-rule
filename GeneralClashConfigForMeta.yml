@@ -115,6 +115,10 @@ dns:
      - '*.msftconnecttest.com'
      - '*.mcdn.bilivideo.cn'
      - WORKGROUP
+  proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns
+    - https://doh.pub/dns-query              # 不写时用nameserver解析
+    - https://cloudflare-dns.com/dns-query
+    - tls://1.0.0.1:853
   nameserver:
     - tls://223.5.5.5:853 # 阿里 DNS over TLS
     - tls://dot.pub # 腾讯 DNS over TLS
