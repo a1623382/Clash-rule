@@ -115,6 +115,12 @@ dns:
      - '*.msftconnecttest.com'
      - '*.mcdn.bilivideo.cn'
      - WORKGROUP
+  default-nameserver:
+      - 223.5.5.5
+      - 119.29.29.29
+      - 8.8.4.4
+      - 1.0.0.1
+      - 9.9.9.11
   proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns
     - https://doh.pub/dns-query              # 不写时用nameserver解析
     - https://dns11.quad9.net/dns-query
