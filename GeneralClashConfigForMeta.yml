@@ -129,12 +129,12 @@ dns:
     - dhcp://system
   fallback:
      - https://dns.alidns.com/dns-query#h3=true
+     - https://dns11.quad9.net/dns-query
      - https://cloudflare-dns.com/dns-query
      - https://dns.google/dns-query
-     - https://dns11.quad9.net/dns-query
+     - tls://dns11.quad9.net
      - tls://1.0.0.1:853
      - tls://dns.google:853
-     - tls://dns11.quad9.net
 
   fallback-filter:                   #回落DNS服务器过滤
     geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
