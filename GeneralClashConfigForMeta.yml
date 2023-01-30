@@ -124,8 +124,8 @@ dns:
   proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns
      - https://doh.pub/dns-query              # 不写时用nameserver解析
      - https://dns11.quad9.net/dns-query
-     - https://cloudflare-dns.com/dns-query
-     - tls://8.8.4.4:853
+     - https://cloudflare-dns.com/dns-query#h3=true
+     - https://dns.google/dns-query#h3=true
   nameserver:
      - tls://dns.rubyfish.cn:853 # 红鱼 DNS over TLS
      - tls://dot.pub # 腾讯 DNS over TLS
@@ -137,8 +137,8 @@ dns:
   fallback:
      - https://dns.alidns.com/dns-query#h3=true
      - https://dns11.quad9.net/dns-query
-     - https://cloudflare-dns.com/dns-query
-     - https://dns.google/dns-query
+     - https://cloudflare-dns.com/dns-query#h3=true
+     - https://dns.google/dns-query#h3=true
      - tls://dns11.quad9.net
      - tls://1.0.0.1:853
      - tls://dns.google:853
