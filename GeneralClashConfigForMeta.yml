@@ -120,21 +120,21 @@ dns:
     - https://cloudflare-dns.com/dns-query
     - tls://1.0.0.1:853
   nameserver:
-    - tls://223.5.5.5:853 # 阿里 DNS over TLS
+    - tls://dns.rubyfish.cn:853 # 红鱼 DNS over TLS
     - tls://dot.pub # 腾讯 DNS over TLS
     - https://doh.pub/dns-query # DNS over HTTPS
-    - https://dns.alidns.com/dns-query#h3=true #【Meta专属】强制HTTP/3
-    - https://mozilla.cloudflare-dns.com/dns-query#h3=true #【Meta专属】指定策略组和使用 HTTP/3
+    - https://doh.opendns.com/dns-query
+    - https://mozilla.cloudflare-dns.com/dns-query#h3=true #【Meta专属】强制HTTP/3
     - quic://dns.adguard.com:784 # DNS over QUIC
     - dhcp://system
   fallback:
-     - tls://dns.rubyfish.cn:853
-     - quic://a.passcloud.xyz:784     #【Meta专属】Dns over quic
-     - https://dns.rubyfish.cn/dns-query
+     - https://dns.alidns.com/dns-query#h3=true
      - https://cloudflare-dns.com/dns-query
      - https://dns.google/dns-query
+     - https://dns11.quad9.net/dns-query
      - tls://1.0.0.1:853
      - tls://dns.google:853
+     - tls://dns11.quad9.net
 
   fallback-filter:                   #回落DNS服务器过滤
     geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
