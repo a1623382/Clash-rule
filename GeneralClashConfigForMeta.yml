@@ -117,8 +117,9 @@ dns:
      - WORKGROUP
   proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns
     - https://doh.pub/dns-query              # 不写时用nameserver解析
+    - https://dns11.quad9.net/dns-query
     - https://cloudflare-dns.com/dns-query
-    - tls://1.0.0.1:853
+    - tls://8.8.4.4:853
   nameserver:
     - tls://dns.rubyfish.cn:853 # 红鱼 DNS over TLS
     - tls://dot.pub # 腾讯 DNS over TLS
