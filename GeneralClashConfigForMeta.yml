@@ -116,24 +116,24 @@ dns:
      - '*.mcdn.bilivideo.cn'
      - WORKGROUP
   default-nameserver:
-      - 223.5.5.5
-      - 119.29.29.29
-      - 8.8.4.4
-      - 1.0.0.1
-      - 9.9.9.11
+     - 223.5.5.5
+     - 119.29.29.29
+     - 8.8.4.4
+     - 1.0.0.1
+     - 9.9.9.11
   proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns
-    - https://doh.pub/dns-query              # 不写时用nameserver解析
-    - https://dns11.quad9.net/dns-query
-    - https://cloudflare-dns.com/dns-query
-    - tls://8.8.4.4:853
+     - https://doh.pub/dns-query              # 不写时用nameserver解析
+     - https://dns11.quad9.net/dns-query
+     - https://cloudflare-dns.com/dns-query
+     - tls://8.8.4.4:853
   nameserver:
-    - tls://dns.rubyfish.cn:853 # 红鱼 DNS over TLS
-    - tls://dot.pub # 腾讯 DNS over TLS
-    - https://doh.pub/dns-query # DNS over HTTPS
-    - https://doh.opendns.com/dns-query
-    - https://mozilla.cloudflare-dns.com/dns-query#h3=true #【Meta专属】强制HTTP/3
-    - quic://dns.adguard.com:784 # DNS over QUIC
-    - dhcp://system
+     - tls://dns.rubyfish.cn:853 # 红鱼 DNS over TLS
+     - tls://dot.pub # 腾讯 DNS over TLS
+     - https://doh.pub/dns-query # DNS over HTTPS
+     - https://doh.opendns.com/dns-query
+     - https://mozilla.cloudflare-dns.com/dns-query#h3=true #【Meta专属】强制HTTP/3
+     - quic://dns.adguard.com:784 # DNS over QUIC
+     - dhcp://system
   fallback:
      - https://dns.alidns.com/dns-query#h3=true
      - https://dns11.quad9.net/dns-query
@@ -150,6 +150,8 @@ dns:
       - gfw
     ipcidr:                          #列表中的ip使用fallback返回解析结果
       - 240.0.0.0/4
+      - 127.0.0.1/32
+      - 0.0.0.0/32
     domain:                          #列表中的域名使用fallback返回解析结果
       - '+.google.com'
       - '+.facebook.com'
