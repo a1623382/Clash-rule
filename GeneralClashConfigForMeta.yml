@@ -54,6 +54,11 @@ experimental:
   ignore-resolve-fail: true # 忽略 DNS 解析失败，默认值为 true
   # interface-name: en0 # outbound interface name
 
+#  全局TLS指纹,优先低于proxy内的 client-fingerprint
+#  可选："chrome","firefox","safari","ios","random","none" options.
+#  Utls is currently support TLS transport in TCP/grpc/WS/HTTP for VLESS/Vmess and trojan.
+global-client-fingerprint: chrome
+
 # 本地 SOCKS5 / HTTP(S) 服务认证
 # authentication:
 #  - "user1:pass1"
@@ -61,35 +66,8 @@ experimental:
 profile:                   #缓存设置(文件位置./cache.db)
   store-selected: false    #节点状态记忆（若不同配置有同代理名称,设置值共享）
   store-fake-ip: true      #fake-ip缓存
-  
-sniffer:                         #【Meta专属】sniffer域名嗅探器
-  enable: true                   #嗅探开关
-  sniffing:                      #嗅探协议对象：目前支持tls/http
-    - tls
-    - http
-  skip-domain:                   #列表中的sni字段，保留mapping结果，不通过嗅探还原域名
-                                 #优先级比force-domain高
-    - 'Mijia Cloud'              #米家设备，建议加
-    - 'dlg.io.mi.com'
-    - '+.apple.com'              #苹果域名，建议加
-  # - '*.baidu.com'              #支持通配符
-    
-  force-domain:                  #需要强制嗅探的域名，默认只对IP嗅探
-  # - '+'                        #去掉注释后等于全局嗅探
-    - 'google.com'
-    
-  port-whitelist:               #端口白名单，只对名单内的端口进行还原域名
-   - 80
-   - 443
-   - 8000-9000
 
-# 实验性功能 hosts, 支持通配符 (例如 *.clash.dev 甚至 *.foo.*.example.com)
-# 静态的域名 比 通配域名 具有更高的优先级 (foo.example.com 优先于 *.example.com)
-# 注意: hosts 在 fake-ip 模式下不生效
-#hosts:
-#   '*.clash.dev': 127.0.0.1
-#   'alpha.clash.dev': '::1'
-
+# DNS 分流支持 GeoSite
 dns:
   enable: true # 是否启用dns false
   ipv6: true
@@ -126,14 +104,21 @@ dns:
      - https://dns11.quad9.net/dns-query
      - https://cloudflare-dns.com/dns-query#h3=true
      - https://dns.google/dns-query#h3=true
+  nameserver-policy:
+    "geosite:cn": 
+      - https://doh.pub/dns-query
+      - https://dns.alidns.com/dns-query
+      - tls://dns.rubyfish.cn:853 # 红鱼 DNS over TLS
+      - tls://dot.pub # 腾讯 DNS over TLS
+      - dhcp://system
   nameserver:
-     - tls://dns.rubyfish.cn:853 # 红鱼 DNS over TLS
-     - tls://dot.pub # 腾讯 DNS over TLS
-     - https://doh.pub/dns-query # DNS over HTTPS
+     - https://dns.google/dns-query # DNS over HTTPS
      - https://doh.opendns.com/dns-query
      - https://mozilla.cloudflare-dns.com/dns-query#h3=true #【Meta专属】强制HTTP/3
      - quic://dns.adguard.com:784 # DNS over QUIC
-     - dhcp://system
+     - https://dns.cloudflare.com/dns-query
+     - https://doh.dns.sb/dns-query
+
   fallback:
      - https://dns.alidns.com/dns-query#h3=true
      - https://dns11.quad9.net/dns-query
@@ -176,6 +161,55 @@ dns:
 #   DoH: 以 https:// 开头的 DNS 服务器。拥有更好的伪装性，且几乎不可能被运营商或网络管理封锁，但查询效率和安全性可能略低。
 #   DoT: 以 tls:// 开头的 DNS 服务器。拥有更高的安全性和查询效率，但端口有可能被管制或封锁。
 #   若要了解更多关于 DoH/DoT 相关技术，请自行查阅规范文档。
+
+sniffer:                         #【Meta专属】sniffer域名嗅探器
+  enable: true                   #嗅探开关
+  ## 对 redir-host 类型识别的流量进行强制嗅探
+  ## 如：Tun、Redir 和 TProxy 并 DNS 为 redir-host 皆属于
+  # force-dns-mapping: false
+  ## 对所有未获取到域名的流量进行强制嗅探
+  # parse-pure-ip: false
+  # 是否使用嗅探结果作为实际访问，默认 true
+  # 全局配置，优先级低于 sniffer.sniff 实际配置
+  override-destination: false
+  sniff:
+    # TLS 默认如果不配置 ports 默认嗅探 443
+    TLS:
+      ports: [443, 8443]
+
+    # 默认嗅探 80
+    HTTP:
+      # 需要嗅探的端口
+
+      ports: [80, 8080-8880]
+      # 可覆盖 sniffer.override-destination
+      override-destination: true
+  ## 对嗅探结果进行跳过
+  skip-domain:                   #列表中的sni字段，保留mapping结果，不通过嗅探还原域名
+                                 #优先级比force-domain高
+    - Mijia Cloud             #米家设备，建议加
+    - dlg.io.mi.com
+    - +.apple.com             #苹果域名，建议加
+  # - '*.baidu.com'              #支持通配符
+    
+  force-domain:                  #需要强制嗅探的域名，默认只对IP嗅探
+  # - '+'                        #去掉注释后等于全局嗅探
+    - google.com
+    - +.v2ex.com
+    
+  port-whitelist:               #端口白名单，只对名单内的端口进行还原域名
+   - 80
+   - 443
+   - 8000-9000
+
+# 实验性功能 hosts, 支持通配符 (例如 *.clash.dev 甚至 *.foo.*.example.com)
+# 静态的域名 比 通配域名 具有更高的优先级 (foo.example.com 优先于 *.example.com)
+# 注意: hosts 在 fake-ip 模式下不生效
+#hosts:
+#   '*.clash.dev': 127.0.0.1
+#   'alpha.clash.dev': '::1'
+
+
 
 # 代理组
 # 下面这3个不要引到订阅里去 要不会出错
