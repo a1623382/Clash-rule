@@ -90,7 +90,7 @@ dns:
      - https://dns.alidns.com/dns-query # 阿里 DoH DNS
      - https://doh.pub/dns-query # 腾讯 DoH DNS
   fallback:
-     - tls://dns.rubyfish.cn:853
+     - tls://dns.alidns.com
      - tls://1.0.0.1:853
      - tls://dns.google:853
      - https://dns.rubyfish.cn/dns-query
