@@ -108,8 +108,8 @@ dns:
     "geosite:cn": 
       - https://doh.pub/dns-query
       - https://dns.alidns.com/dns-query#h3=true
-      - tls://dns.rubyfish.cn:853 # 红鱼 DNS over TLS
-      - tls://dot.pub # 腾讯 DNS over TLS
+      - tls://dns.alidns.com
+      - tls://dot.pub
       - dhcp://system
   nameserver:
      - https://dns.google/dns-query # DNS over HTTPS
