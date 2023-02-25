@@ -86,14 +86,22 @@ dns:
      - '*.msftconnecttest.com'
      - '*.mcdn.bilivideo.cn'
      - WORKGROUP
+  default-nameserver:
+     - 223.5.5.5
+     - 119.29.29.29
+     - 8.8.4.4
+     - 1.0.0.1
+     - 9.9.9.11
   nameserver:
      - https://dns.alidns.com/dns-query # 阿里 DoH DNS
      - https://doh.pub/dns-query # 腾讯 DoH DNS
-  fallback:
      - tls://dns.alidns.com
+     - tls://dot.pub
+  fallback:
      - tls://1.0.0.1:853
      - tls://dns.google:853
-     - https://dns.rubyfish.cn/dns-query
+     - tls://dns11.quad9.net
+     - https://dns11.quad9.net/dns-query
      - https://cloudflare-dns.com/dns-query
      - https://dns.google/dns-query
   fallback-filter:
@@ -101,15 +109,14 @@ dns:
      geoip-code: CN                   #geoip匹配区域设定
      ipcidr: # 在这个网段内的 IP 地址会被考虑为被污染的 IP
        - 240.0.0.0/4
+       - 127.0.0.1/32
+       - 0.0.0.0/32
      domain:                          #列表中的域名使用fallback返回解析结果
       - '+.google.com'
       - '+.facebook.com'
       - '+.youtube.com'
-  default-nameserver:
-      - 223.5.5.5
-      - 119.29.29.29
-      - 8.8.4.4
-      - 1.0.0.1
+
+  use-hosts: true
 
 # 1. clash DNS 请求逻辑：
 #   (1) 当访问一个域名时， nameserver 与 fallback 列表内的所有服务器并发请求，得到域名对应的 IP 地址。
