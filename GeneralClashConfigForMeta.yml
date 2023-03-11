@@ -103,7 +103,6 @@ dns:
   fallback:
      - https://cloudflare-dns.com/dns-query#h3=true
      - https://dns.google/dns-query#h3=true
-     - https://doh.pub/dns-query
      - https://dns11.quad9.net/dns-query
      - tls://dns11.quad9.net
      - tls://1.0.0.1:853
