@@ -87,24 +87,24 @@ dns:
      - tls://dns.sb
   nameserver-policy:
     "geosite:cn": 
-      - https://doh.pub/dns-query
       - https://dns.alidns.com/dns-query#h3=true
+      - https://doh.pub/dns-query
       - tls://dns.alidns.com
       - tls://dot.pub
       - dhcp://system
   nameserver:
-     - https://dns.google/dns-query # DNS over HTTPS
-     - https://doh.opendns.com/dns-query
-     - https://mozilla.cloudflare-dns.com/dns-query#h3=true #【Meta专属】强制HTTP/3
      - quic://dns.adguard.com:784 # DNS over QUIC
+     - https://mozilla.cloudflare-dns.com/dns-query#h3=true #【Meta专属】强制HTTP/3
+     - https://doh.dns.sb/dns-query # DNS over HTTPS
      - https://dns.cloudflare.com/dns-query
-     - https://doh.dns.sb/dns-query
+     - https://dns.google/dns-query
+     - https://doh.opendns.com/dns-query
 
   fallback:
-     - https://doh.pub/dns-query
-     - https://dns11.quad9.net/dns-query
      - https://cloudflare-dns.com/dns-query#h3=true
      - https://dns.google/dns-query#h3=true
+     - https://doh.pub/dns-query
+     - https://dns11.quad9.net/dns-query
      - tls://dns11.quad9.net
      - tls://1.0.0.1:853
      - tls://dns.google:853
