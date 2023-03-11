@@ -72,9 +72,11 @@ dns:
      - tls://1.0.0.1:853
      - tls://dns.google:853
      - tls://dns11.quad9.net
+     - tls://dns.sb
      - https://dns11.quad9.net/dns-query
      - https://cloudflare-dns.com/dns-query
      - https://dns.google/dns-query
+     - https://doh.dns.sb/dns-query
   fallback-filter:
      geoip: true # 默认
      geoip-code: CN                   #geoip匹配区域设定

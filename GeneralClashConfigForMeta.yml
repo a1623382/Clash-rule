@@ -80,9 +80,11 @@ dns:
      - 9.9.9.11
   proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns
      - https://dns.alidns.com/dns-query#h3=true              # 不写时用nameserver解析
-     - https://dns11.quad9.net/dns-query
      - https://cloudflare-dns.com/dns-query#h3=true
      - https://dns.google/dns-query#h3=true
+     - https://dns11.quad9.net/dns-query
+     - https://doh.dns.sb/dns-query
+     - tls://dns.sb
   nameserver-policy:
     "geosite:cn": 
       - https://doh.pub/dns-query
@@ -110,8 +112,8 @@ dns:
   fallback-filter:                   #回落DNS服务器过滤
     geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
     geoip-code: CN                   #geoip匹配区域设定
-    geosite:                         #【Meta专属】设定geosite某分类使用fallback返回结果
-      - gfw
+    # geosite:                         #【Meta专属】设定geosite某分类使用fallback返回结果，疑似将要废弃
+    #   - gfw
     ipcidr:                          #列表中的ip使用fallback返回解析结果
       - 240.0.0.0/4
       - 127.0.0.1/32
