@@ -43,7 +43,7 @@ experimental:
 global-client-fingerprint: chrome
 
 profile:                   #缓存设置(文件位置./cache.db)
-  store-selected: false    #节点状态记忆（若不同配置有同代理名称,设置值共享）
+  store-selected: true    #节点状态记忆（若不同配置有同代理名称,设置值共享）
   store-fake-ip: true      #fake-ip缓存
 
 # DNS 分流支持 GeoSite
