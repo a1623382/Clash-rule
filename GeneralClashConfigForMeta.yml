@@ -21,10 +21,18 @@ allow-lan: true
 # #"[aaaa::a8aa:ff:fe09:57d8]": 绑定单个IPv6地址
 bind-address: "*"
 ipv6: true
-
+#  find-process-mode has 3 values:always, strict, off
+#  - always, 开启，强制匹配所有进程
+#  - strict, 默认，由 clash 判断是否开启
+#  - off, 不匹配进程，推荐在路由器上使用此模式
+find-process-mode: strict
 # 规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
 mode: rule
-
+#自定义 geodata url
+geox-url:
+  geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat"
+  geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
+  mmdb: "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb"
 # 设置日志输出级别 (默认级别：silent，即不输出任何内容，以避免因日志内容过大而导致程序内存溢出）。
 # 5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
 log-level: info
@@ -37,21 +45,23 @@ experimental:
   ignore-resolve-fail: true # 忽略 DNS 解析失败，默认值为 true
   # interface-name: en0 # outbound interface name
 
-#  全局TLS指纹,优先低于proxy内的 client-fingerprint
-#  可选："chrome","firefox","safari","ios","random","none" options.
-#  Utls is currently support TLS transport in TCP/grpc/WS/HTTP for VLESS/Vmess and trojan.
-global-client-fingerprint: chrome
+# 全局 TLS 指纹，优先低于 proxy 内的 client-fingerprint
+# 可选： "chrome","firefox","safari","ios","random","none" options.
+# Utls is currently support TLS transport in TCP/grpc/WS/HTTP for VLESS/Vmess and trojan.
+global-client-fingerprint: random
 
-profile:                   #缓存设置(文件位置./cache.db)
-  store-selected: true    #节点状态记忆（若不同配置有同代理名称,设置值共享）
-  store-fake-ip: true      #fake-ip缓存
+profile: # 存储 select 选择记录
+  store-selected: true
+  # 持久化 fake-ip
+  store-fake-ip: true
 
 # DNS 分流支持 GeoSite
 dns:
   enable: true # 是否启用dns false
+  prefer-h3: true # 开启 DoH 支持 HTTP/3，将并发尝试
   ipv6: true
   listen: 0.0.0.0:53
-  enhanced-mode: redir-host         #DNS模式(redir-host/fake-ip)
+  enhanced-mode: fake-ip        #DNS模式(redir-host/fake-ip)
                                      #【Meta专属】redir-host传递域名，可远程解析
   fake-ip-range: 198.18.0.1/16 #
   fake-ip-filter: # fake ip 白名单列表，如果你不知道这个参数的作用，请勿修改
@@ -86,7 +96,7 @@ dns:
      - https://doh.dns.sb/dns-query
      - tls://dns.sb
   nameserver-policy:
-    "geosite:cn": 
+    "geosite:cn,private,apple": 
       - https://dns.alidns.com/dns-query#h3=true
       - https://doh.pub/dns-query
       - tls://dns.alidns.com
@@ -144,8 +154,15 @@ dns:
 #   DoT: 以 tls:// 开头的 DNS 服务器。拥有更高的安全性和查询效率，但端口有可能被管制或封锁。
 #   若要了解更多关于 DoH/DoT 相关技术，请自行查阅规范文档。
 
-sniffer:                         #【Meta专属】sniffer域名嗅探器
-  enable: true                   #嗅探开关
+#ebpf配置
+ebpf:
+  #auto-redir: # redirect 模式，仅支持 TCP
+    #- eth0
+  redirect-to-tun: # UDP+TCP 使用该功能请勿启用 auto-route
+    - eth0
+    
+sniffer:
+  enable: true
   ## 对 redir-host 类型识别的流量进行强制嗅探
   ## 如：Tun、Redir 和 TProxy 并 DNS 为 redir-host 皆属于
   # force-dns-mapping: false
@@ -154,35 +171,34 @@ sniffer:                         #【Meta专属】sniffer域名嗅探器
   # 是否使用嗅探结果作为实际访问，默认 true
   # 全局配置，优先级低于 sniffer.sniff 实际配置
   override-destination: false
-  sniff:
-    # TLS 默认如果不配置 ports 默认嗅探 443
+  sniff: # TLS 默认如果不配置 ports 默认嗅探 443
     TLS:
       ports: [443, 8443]
-
+    
     # 默认嗅探 80
-    HTTP:
-      # 需要嗅探的端口
-
+    HTTP: # 需要嗅探的端口
+      
       ports: [80, 8080-8880]
       # 可覆盖 sniffer.override-destination
       override-destination: true
-  ## 对嗅探结果进行跳过
-  skip-domain:                   #列表中的sni字段，保留mapping结果，不通过嗅探还原域名
-                                 #优先级比force-domain高
-    - Mijia Cloud             #米家设备，建议加
-    - dlg.io.mi.com
-    - +.apple.com             #苹果域名，建议加
-  # - '*.baidu.com'              #支持通配符
-    
-  force-domain:                  #需要强制嗅探的域名，默认只对IP嗅探
-  # - '+'                        #去掉注释后等于全局嗅探
-    - google.com
+  force-domain:
     - +.v2ex.com
-    
-  port-whitelist:               #端口白名单，只对名单内的端口进行还原域名
-   - 80
-   - 443
-   - 8000-9000
+  # 对嗅探结果进行跳过
+  skip-domain:
+    - Mijia Cloud
+  # 需要嗅探协议
+  # 已废弃，若 sniffer.sniff 配置则此项无效
+  #sniffing:
+    #- tls
+    #- http
+  # 强制对此域名进行嗅探
+  
+  # 仅对白名单中的端口进行嗅探，默认为 443，80
+  # 已废弃，若 sniffer.sniff 配置则此项无效
+  #port-whitelist:
+    #- "80"
+    #- "443"
+    # - 8000-9999
 
 # Clash for Windows
 # Proxies module latency test settings
