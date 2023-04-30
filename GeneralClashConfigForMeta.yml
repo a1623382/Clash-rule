@@ -41,13 +41,8 @@ geox-url:
 # 5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
 log-level: debug
 
-
-
 # Clash 的 RESTful API
 external-controller: '127.0.0.1:9090'
-
-external-ui: /path/to/ui/folder # 配置 WEB UI 目录，使用 http://{{external-controller}}/ui 访问
-
 
 # 实验性功能
 experimental:
