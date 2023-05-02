@@ -64537,3 +64537,4 @@ DOMAIN-SUFFIX,zzzzaaaa.com
 DOMAIN-SUFFIX,zzzzhong.com
 DOMAIN-SUFFIX,zzzzmall.com
 DOMAIN-SUFFIX,zzzzzz.me
+IP-CIDR,193.123.234.25/32
