@@ -57,7 +57,7 @@ dns:
   prefer-h3: true # 开启 DoH 支持 HTTP/3，将并发尝试
   ipv6: true
   listen: 0.0.0.0:53
-  enhanced-mode: redir-host       #DNS模式(redir-host/fake-ip)
+  enhanced-mode: fake-ip       #DNS模式(redir-host/fake-ip)
                                      #【Meta专属】redir-host传递域名，可远程解析
   fake-ip-range: 198.18.0.1/16 #
   fake-ip-filter: # fake ip 白名单列表，如果你不知道这个参数的作用，请勿修改
@@ -84,6 +84,7 @@ dns:
      - 8.8.4.4
      - 1.0.0.1
      - 9.9.9.11
+     - system
   proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns
      - https://dns.alidns.com/dns-query#h3=true              # 不写时用nameserver解析
      - https://cloudflare-dns.com/dns-query#h3=true
@@ -97,7 +98,7 @@ dns:
       - https://doh.pub/dns-query
       - tls://dns.alidns.com
       - tls://dot.pub
-      - dhcp://system
+      - dhcp://en0
   nameserver:
      - quic://dns.adguard.com:784 # DNS over QUIC
      - https://mozilla.cloudflare-dns.com/dns-query#h3=true #【Meta专属】强制HTTP/3
