@@ -57,7 +57,7 @@ dns:
   prefer-h3: true # 开启 DoH 支持 HTTP/3，将并发尝试
   ipv6: true
   listen: 0.0.0.0:53
-  enhanced-mode: fake-ip       #DNS模式(redir-host/fake-ip)
+  enhanced-mode: redir-host       #DNS模式(redir-host/fake-ip)
                                      #【Meta专属】redir-host传递域名，可远程解析
   fake-ip-range: 198.18.0.1/16 #
   fake-ip-filter: # fake ip 白名单列表，如果你不知道这个参数的作用，请勿修改
@@ -79,37 +79,35 @@ dns:
      - '*.mcdn.bilivideo.cn'
      - WORKGROUP
   default-nameserver:
-     - 223.5.5.5
-     - 119.29.29.29
-     - 8.8.4.4
-     - 1.0.0.1
-     - 9.9.9.11
-     - system
+     - https://223.5.5.5/dns-query
+     - https://119.29.29.29/dns-query
+     - https://8.8.4.4/dns-query
+     - https://1.0.0.1/dns-query
+     - https://9.9.9.11/dns-query
   proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns
-     - https://dns.alidns.com/dns-query#h3=true              # 不写时用nameserver解析
-     - https://cloudflare-dns.com/dns-query#h3=true
-     - https://dns.google/dns-query#h3=true
+     - https://dns.alidns.com/dns-query              # 不写时用nameserver解析
+     - https://cloudflare-dns.com/dns-query
+     - https://dns.google/dns-query
      - https://dns11.quad9.net/dns-query
      - https://doh.dns.sb/dns-query
      - tls://dns.sb
   nameserver-policy:
     "geosite:cn,private,apple": 
-      - https://dns.alidns.com/dns-query#h3=true
+      - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
       - tls://dns.alidns.com
       - tls://dot.pub
-      - dhcp://en0
+      - system
   nameserver:
-     - quic://dns.adguard.com:784 # DNS over QUIC
-     - https://mozilla.cloudflare-dns.com/dns-query#h3=true #【Meta专属】强制HTTP/3
-     - https://doh.dns.sb/dns-query # DNS over HTTPS
+     - https://mozilla.cloudflare-dns.com/dns-query
+     - https://doh.dns.sb/dns-query
      - https://dns.cloudflare.com/dns-query
      - https://dns.google/dns-query
      - https://doh.opendns.com/dns-query
 
   fallback:
-     - https://cloudflare-dns.com/dns-query#h3=true
-     - https://dns.google/dns-query#h3=true
+     - https://cloudflare-dns.com/dns-query
+     - https://dns.google/dns-query
      - https://dns11.quad9.net/dns-query
      - https://doh.dns.sb/dns-query
      - tls://1.0.0.1:853
@@ -120,8 +118,6 @@ dns:
   fallback-filter:                   #回落DNS服务器过滤
     geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
     geoip-code: CN                   #geoip匹配区域设定
-    # geosite:                         #【Meta专属】设定geosite某分类使用fallback返回结果，疑似将要废弃
-    #   - gfw
     ipcidr:                          #列表中的ip使用fallback返回解析结果
       - 240.0.0.0/4
       - 127.0.0.1/32
