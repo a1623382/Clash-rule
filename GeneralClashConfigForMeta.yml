@@ -34,7 +34,7 @@ geox-url:
 log-level: debug
 
 # Clash 的 RESTful API
-external-controller: '127.0.0.1:7890'
+external-controller: '127.0.0.1:7921'
 
 # 实验性功能
 experimental:
