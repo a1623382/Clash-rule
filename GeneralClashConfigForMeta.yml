@@ -46,6 +46,8 @@ experimental:
 # Utls is currently support TLS transport in TCP/grpc/WS/HTTP for VLESS/Vmess and trojan.
 global-client-fingerprint: random
 
+keep-alive-interval: 15
+
 profile: # 存储 select 选择记录
   store-selected: true
   # 持久化 fake-ip
