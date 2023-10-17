@@ -53,7 +53,6 @@ profile: # 存储 select 选择记录
   # 持久化 fake-ip
   store-fake-ip: true
 unified-delay: true # 更换延迟计算方式，去除握手等额外延迟
-tcp-concurrent: true # TCP 并发
 # DNS 分流支持 GeoSite
 dns:
   enable: true # 是否启用dns false
