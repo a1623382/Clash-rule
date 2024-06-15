@@ -46,7 +46,7 @@ experimental:
 # Utls is currently support TLS transport in TCP/grpc/WS/HTTP for VLESS/Vmess and trojan.
 global-client-fingerprint: random
 
-keep-alive-interval: 600
+keep-alive-interval: 3600
 
 profile: # 存储 select 选择记录
   store-selected: true
@@ -280,8 +280,6 @@ sniffer:
   ## 对所有未获取到域名的流量进行强制嗅探
   # parse-pure-ip: false
   # 是否使用嗅探结果作为实际访问，默认 true
-  # 全局配置，优先级低于 sniffer.sniff 实际配置
-  override-destination: false
   sniff: # TLS 默认如果不配置 ports 默认嗅探 443
     TLS:
       ports: [443, 8443]
@@ -293,10 +291,16 @@ sniffer:
       # 可覆盖 sniffer.override-destination
       override-destination: true
   force-domain:
-    - +.v2ex.com
+    - '+.netflix.com'
+    - '+.nflxvideo.net'
+    - '+.amazonaws.com'
+    - '+.media.dssott.com'
+    - '+.v2ex.com'
   # 对嗅探结果进行跳过
   skip-domain:
+    - '+.apple.com'
     - Mijia Cloud
+    - dlg.io.mi.com
   # 需要嗅探协议
 
 # Clash for Windows
