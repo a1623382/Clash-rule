@@ -220,12 +220,12 @@ dns:
      - +.oray.com
      - WORKGROUP
   default-nameserver:
-     - 'https://8.8.8.8/dns-query#♻️ 自动选择'
-     - 'https://1.1.1.1/dns-query#♻️ 自动选择'
+     - 'https://8.8.4.4/dns-query#♻️ 自动选择'
+     - 'https://1.0.0.1/dns-query#♻️ 自动选择'
      - 'https://9.9.9.11/dns-query#♻️ 自动选择'
   proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns           # 不写时用nameserver解析
-     - https://1.1.1.1/dns-query
-     - https://8.8.8.8/dns-query
+     - https://1.0.0.1/dns-query
+     - https://8.8.4.4/dns-query
      - https://9.9.9.11/dns-query
      - https://185.222.222.222/dns-query
      - tls://45.11.45.11
@@ -238,12 +238,12 @@ dns:
   nameserver:
      - 'https://9.9.9.11/dns-query#♻️ 自动选择'
      - 'https://185.222.222.222/dns-query#♻️ 自动选择'
-     - 'https://1.1.1.1/dns-query#♻️ 自动选择'
-     - 'https://8.8.8.8/dns-query#♻️ 自动选择'
+     - 'https://1.0.0.1/dns-query#♻️ 自动选择'
+     - 'https://8.8.4.4/dns-query#♻️ 自动选择'
 
   # fallback:
-    #  - https://1.1.1.1/dns-query
-    #  - https://8.8.8.8/dns-query
+    #  - https://1.0.0.1/dns-query
+    #  - https://8.8.4.4/dns-query
     #  - https://9.9.9.11/dns-query
     #  - https://185.222.222.222/dns-query
     #  - tls://1.0.0.1:853
