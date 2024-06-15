@@ -220,39 +220,36 @@ dns:
      - +.oray.com
      - WORKGROUP
   default-nameserver:
-     - https://223.5.5.5/dns-query
-     - https://119.29.29.29/dns-query
-     - https://8.8.4.4/dns-query
-     - https://1.0.0.1/dns-query
-     - https://9.9.9.11/dns-query
-  proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns
-     - https://dns.alidns.com/dns-query              # 不写时用nameserver解析
-     - https://cloudflare-dns.com/dns-query
-     - https://dns.google/dns-query
-     - https://dns11.quad9.net/dns-query
-     - https://doh.dns.sb/dns-query
-     - tls://dns.sb
-  nameserver-policy:
-    "geosite:cn,private,apple": 
-      - https://dns.alidns.com/dns-query
-      - https://doh.pub/dns-query
-      - tls://dns.alidns.com
-      - tls://dot.pub
-  nameserver:
-     - https://9.9.9.9/dns-query
-     - https://185.222.222.222/dns-query
+     - 'https://8.8.8.8/dns-query#♻️ 自动选择'
+     - 'https://1.1.1.1/dns-query#♻️ 自动选择'
+     - 'https://9.9.9.11/dns-query#♻️ 自动选择'
+  proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns           # 不写时用nameserver解析
      - https://1.1.1.1/dns-query
      - https://8.8.8.8/dns-query
+     - https://9.9.9.11/dns-query
+     - https://185.222.222.222/dns-query
+     - tls://45.11.45.11
+  nameserver-policy:
+    "geosite:cn,private,apple": 
+      - https://223.5.5.5/dns-query
+      - https://1.12.12.12/dns-query
+      - tls://223.6.6.6
+      - tls://1.12.12.12
+  nameserver:
+     - 'https://9.9.9.11/dns-query#♻️ 自动选择'
+     - 'https://185.222.222.222/dns-query#♻️ 自动选择'
+     - 'https://1.1.1.1/dns-query#♻️ 自动选择'
+     - 'https://8.8.8.8/dns-query#♻️ 自动选择'
 
   # fallback:
-    #  - https://cloudflare-dns.com/dns-query
-    #  - https://dns.google/dns-query
-    #  - https://dns11.quad9.net/dns-query
-    #  - https://doh.dns.sb/dns-query
+    #  - https://1.1.1.1/dns-query
+    #  - https://8.8.8.8/dns-query
+    #  - https://9.9.9.11/dns-query
+    #  - https://185.222.222.222/dns-query
     #  - tls://1.0.0.1:853
-    #  - tls://dns.google:853
-    #  - tls://dns11.quad9.net
-    #  - tls://dns.sb
+    #  - tls://8.8.4.4:853
+    #  - tls://9.9.9.9
+    #  - tls://45.11.45.11
 
 #   fallback-filter:                   #回落DNS服务器过滤
   #   geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
