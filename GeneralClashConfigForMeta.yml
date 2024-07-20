@@ -57,6 +57,7 @@ unified-delay: true # 更换延迟计算方式，去除握手等额外延迟
 dns:
   enable: true # 是否启用dns false
   prefer-h3: true # 开启 DoH 支持 HTTP/3，将并发尝试
+  cache-algorithm: arc
   ipv6: true
   listen: 0.0.0.0:53
   enhanced-mode: fake-ip       #DNS模式(redir-host/fake-ip)
