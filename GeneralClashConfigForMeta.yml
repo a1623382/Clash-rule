@@ -29,6 +29,9 @@ geox-url:
   geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat"
   geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
   mmdb: "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb"
+geo-auto-update: true # 是否自动更新 geodata
+geo-update-interval: 24 # 更新间隔，单位：小时
+
 # 设置日志输出级别 (默认级别：silent，即不输出任何内容，以避免因日志内容过大而导致程序内存溢出）。
 # 5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
 log-level: debug
@@ -242,29 +245,30 @@ dns:
      - 'https://1.0.0.1/dns-query#🔰 节点选择'
      - 'https://8.8.4.4/dns-query#🔰 节点选择'
 
-  # fallback:
-    #  - https://1.0.0.1/dns-query
-    #  - https://8.8.4.4/dns-query
-    #  - https://9.9.9.11/dns-query
-    #  - https://185.222.222.222/dns-query
-    #  - tls://1.0.0.1:853
-    #  - tls://8.8.4.4:853
-    #  - tls://9.9.9.9
-    #  - tls://45.11.45.11
+  fallback:
+     - https://1.0.0.1/dns-query
+     - https://8.8.4.4/dns-query
+     - https://9.9.9.11/dns-query
+     - https://185.222.222.222/dns-query
+     - tls://1.0.0.1:853
+     - tls://8.8.4.4:853
+     - tls://9.9.9.9
+     - tls://45.11.45.11
 
-#   fallback-filter:                   #回落DNS服务器过滤
-  #   geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
-  #   geoip-code: CN                   #geoip匹配区域设定
-  #   ipcidr:                          #列表中的ip使用fallback返回解析结果
-    #   - 240.0.0.0/4
-    #   - 127.0.0.1/32
-    #   - 0.0.0.0/32
-  #   domain:                          #列表中的域名使用fallback返回解析结果
-    #   - '+.google.com'
-    #   - '+.facebook.com'
-    #   - '+.youtube.com'
+   fallback-filter:                   #回落DNS服务器过滤
+     geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
+     geoip-code: CN                   #geoip匹配区域设定
+     ipcidr:                          #列表中的ip使用fallback返回解析结果
+      - 240.0.0.0/4
+      - 127.0.0.1/32
+      - 0.0.0.0/32
+     domain:                          #列表中的域名使用fallback返回解析结果
+      - '+.google.com'
+      - '+.facebook.com'
+      - '+.youtube.com'
 
   use-hosts: true
+  use-system-hosts: true
 
 #ebpf配置
 ebpf:
@@ -303,26 +307,3 @@ sniffer:
     - Mijia Cloud
     - dlg.io.mi.com
   # 需要嗅探协议
-
-# Clash for Windows
-# Proxies module latency test settings
-cfw-latency-timeout: 3000
-cfw-latency-url: http://www.gstatic.com/generate_204
-
-# 打断连接
-# Identify strategy of breaking connections after switching to a new proxy/profile/mode
-# Options for proxy: none, chain(proxy group in connection chains), all
-# Options for profile: true, false
-# Options for mode: true, false
-cfw-conn-break-strategy:
-  proxy: none # none/chain/all
-  profile: true # true/false
-  mode: false # true/false
-
-# 自定义节点排序
-# 可选参数：
-#  default：按配置文件定义节点顺序
-#  latency：按节点延迟升序排列
-#  alphabet：按节点名称字母表排列
-# Sort proxies in Proxies module by default/latency/alphabet
-cfw-proxies-order: latency
