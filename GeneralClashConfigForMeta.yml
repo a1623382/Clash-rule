@@ -38,11 +38,10 @@ log-level: debug
 
 # Clash 的 RESTful API
 external-controller: '127.0.0.1:7921'
-
-# 实验性功能
-experimental:
-  ignore-resolve-fail: true # 忽略 DNS 解析失败，默认值为 true
-  # interface-name: en0 # outbound interface name
+external-ui: /path/to/ui/folder/
+external-ui-name: xd
+# 目前支持下载zip,tgz格式的压缩包
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
 
 # 全局 TLS 指纹，优先低于 proxy 内的 client-fingerprint
 # 可选： "chrome","firefox","safari","ios","random","none" options.
@@ -234,11 +233,13 @@ dns:
      - https://185.222.222.222/dns-query
      - tls://45.11.45.11
   nameserver-policy:
+    "geosite:category-ads-all": rcode://success
     "geosite:cn,private,apple": 
       - https://223.5.5.5/dns-query
       - https://1.12.12.12/dns-query
       - tls://223.6.6.6
       - tls://1.12.12.12
+  respect-rules: false
   nameserver:
      - 'https://9.9.9.11/dns-query#🔰 节点选择'
      - 'https://185.222.222.222/dns-query#🔰 节点选择'
