@@ -103,7 +103,6 @@ dns:
     - 8.8.8.8
     - tls://1.12.12.12:853
     - tls://223.5.5.5:853
-    - system # append DNS server from system configuration. If not found, it would print an error log and skip.
   enhanced-mode: fake-ip # or redir-host
 
   fake-ip-range: 198.18.0.1/16 # fake-ip 池设置
@@ -156,8 +155,8 @@ dns:
      - tls://one.one.one.one
 
   # 专用于direct出口域名解析的 DNS 服务器，非必要配置项，如果不填则遵循nameserver-policy、nameserver和fallback的配置
-  direct-nameserver:
-     - system://
+  #direct-nameserver:
+     #- system://
   # direct-nameserver-follow-policy: false # 是否遵循nameserver-policy，默认为不遵守，仅当direct-nameserver不为空时生效
 
   # 配置 fallback 使用条件
