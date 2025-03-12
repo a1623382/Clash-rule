@@ -1,282 +1,196 @@
-# 混合端口 HTTP和SOCKS5用一个端口
-mixed-port: 7890
-
-# Linux 和 macOS 的 redir 代理端口 (如需使用此功能，请取消注释)
-# redir-port: 7892
+# port: 7890 # HTTP(S) 代理服务器端口
+# socks-port: 7891 # SOCKS5 代理端口
+mixed-port: 7890 # HTTP(S) 和 SOCKS 代理混合端口
+# redir-port: 7892 # 透明代理端口，用于 Linux 和 MacOS
 
 # Transparent proxy server port for Linux (TProxy TCP and TProxy UDP)
-tproxy-port: 7893
+# tproxy-port: 7893
 
-geodata-mode: true         #【Meta专属】使用geoip.dat数据库(默认：false使用mmdb数据库)
-tcp-concurrent: true         #【Meta专属】TCP连接并发，如果域名解析结果对应多个IP，
-                             # 并发所有IP，选择握手最快的IP进行连接
-
-# 允许局域网的连接（可用来共享代理）
-allow-lan: true
-
-bind-address: "*"
-ipv6: true # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
+allow-lan: true # 允许局域网连接
+bind-address: "*" # 绑定 IP 地址，仅作用于 allow-lan 为 true，'*'表示所有地址
+authentication: # http,socks 入口的验证用户名，密码
+  - "username:password"
+skip-auth-prefixes: # 设置跳过验证的 IP 段
+  - 127.0.0.1/8
+  - ::1/128
+lan-allowed-ips: # 允许连接的 IP 地址段，仅作用于 allow-lan 为 true, 默认值为 0.0.0.0/0 和::/0
+  - 0.0.0.0/0
+  - ::/0
+lan-disallowed-ips: # 禁止连接的 IP 地址段，黑名单优先级高于白名单，默认值为空
+  - 192.168.0.3/32
 
 #  find-process-mode has 3 values:always, strict, off
 #  - always, 开启，强制匹配所有进程
-#  - strict, 默认，由 clash 判断是否开启
+#  - strict, 默认，由 mihomo 判断是否开启
 #  - off, 不匹配进程，推荐在路由器上使用此模式
 find-process-mode: strict
-# 规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
+
 mode: rule
+
 #自定义 geodata url
 geox-url:
-  geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat"
-  geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
-  mmdb: "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb"
+  geoip: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb"
+
 geo-auto-update: true # 是否自动更新 geodata
 geo-update-interval: 24 # 更新间隔，单位：小时
 
-# 设置日志输出级别 (默认级别：silent，即不输出任何内容，以避免因日志内容过大而导致程序内存溢出）。
-# 5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
-log-level: debug
+# Matcher implementation used by GeoSite, available implementations:
+# - succinct (default, same as rule-set)
+# - mph (from V2Ray, also `hybrid` in Xray)
+# geosite-matcher: succinct
 
-# Clash 的 RESTful API
-external-controller: '127.0.0.1:7921'
+log-level: debug # 日志等级 silent/error/warning/info/debug
+
+ipv6: true # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
+
+
+tcp-concurrent: true # TCP 并发连接所有 IP, 将使用最快握手的 TCP
+
+# 配置 WEB UI 目录，使用 http://{{external-controller}}/ui 访问
 external-ui: /path/to/ui/folder/
 external-ui-name: xd
 # 目前支持下载zip,tgz格式的压缩包
 external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+
+# 在RESTful API端口上开启DOH服务器
+# ！！！该URL不会验证secret， 如果开启请自行保证安全问题 ！！！
+external-doh-server: /dns-query
+
+# interface-name: en0 # 设置出口网卡
 
 # 全局 TLS 指纹，优先低于 proxy 内的 client-fingerprint
 # 可选： "chrome","firefox","safari","ios","random","none" options.
 # Utls is currently support TLS transport in TCP/grpc/WS/HTTP for VLESS/Vmess and trojan.
 global-client-fingerprint: random
 
+#  TCP keep alive interval
+disable-keep-alive: false #目前在android端强制为true
+keep-alive-idle: 15
 keep-alive-interval: 3600
+
+# routing-mark:6666 # 配置 fwmark 仅用于 Linux
+experimental:
+  # Disable quic-go GSO support. This may result in reduced performance on Linux.
+  # This is not recommended for most users.
+  # Only users encountering issues with quic-go's internal implementation should enable this,
+  # and they should disable it as soon as the issue is resolved.
+  # This field will be removed when quic-go fixes all their issues in GSO.
+  # This equivalent to the environment variable QUIC_GO_DISABLE_GSO=1.
+  #quic-go-disable-gso: true
+
+# 类似于 /etc/hosts, 仅支持配置单个 IP
+hosts:
+# '*.mihomo.dev': 127.0.0.1
+# '.dev': 127.0.0.1
+# 'alpha.mihomo.dev': '::1'
+# test.com: [1.1.1.1, 2.2.2.2]
+# home.lan: lan # lan 为特别字段，将加入本地所有网卡的地址
+# baidu.com: google.com # 只允许配置一个别名
 
 profile: # 存储 select 选择记录
   store-selected: true
+
   # 持久化 fake-ip
   store-fake-ip: true
-unified-delay: true # 更换延迟计算方式，去除握手等额外延迟
-# DNS 分流支持 GeoSite
+
+# DNS 配置
 dns:
-  enable: true # 是否启用dns false
-  prefer-h3: true # 开启 DoH 支持 HTTP/3，将并发尝试
   cache-algorithm: arc
-  ipv6: true
-  listen: 0.0.0.0:53
-  enhanced-mode: fake-ip       #DNS模式(redir-host/fake-ip)
-                                     #【Meta专属】redir-host传递域名，可远程解析
-  fake-ip-range: 198.18.0.1/16 #
-  fake-ip-filter: # fake ip 白名单列表，如果你不知道这个参数的作用，请勿修改
-     #LAN
-     - '*.lan'
-     - '*.localdomain'
-     - '*.example'
-     - '*.invalid'
-     - '*.localhost'
-     - '*.test'
-     - '*.local'
-     - '*.home.arpa'
-     #放行NTP服务
-     - time.*.com
-     - time.*.gov
-     - time.*.edu.cn
-     - time.*.apple.com
-     - time-ios.apple.com
-     - time1.*.com
-     - time2.*.com
-     - time3.*.com
-     - time4.*.com
-     - time5.*.com
-     - time6.*.com
-     - time7.*.com
-     - ntp.*.com
-     - ntp1.*.com
-     - ntp2.*.com
-     - ntp3.*.com
-     - ntp4.*.com
-     - ntp5.*.com
-     - ntp6.*.com
-     - ntp7.*.com
-     - '*.time.edu.cn'
-     - '*.ntp.org.cn'
-     - +.pool.ntp.org
-     - time1.cloud.tencent.com
-     #放行网易云音乐
-     - music.163.com
-     - '*.music.163.com'
-     - '*.126.net'
-#百度音乐
-     - musicapi.taihe.com
-     - music.taihe.com
-#酷狗音乐
-     - songsearch.kugou.com
-     - trackercdn.kugou.com
-#酷我音乐
-     - '*.kuwo.cn'
-#JOOX音乐
-     - api-jooxtt.sanook.com
-     - api.joox.com
-     - joox.com
-#QQ音乐
-     - y.qq.com
-     - '*.y.qq.com'
-     - streamoc.music.tc.qq.com
-     - mobileoc.music.tc.qq.com
-     - isure.stream.qqmusic.qq.com
-     - dl.stream.qqmusic.qq.com
-     - aqqmusic.tc.qq.com
-     - amobile.music.tc.qq.com
-#虾米音乐
-     - '*.xiami.com'
-#咪咕音乐
-     - '*.music.migu.cn'
-     - music.migu.cn
-#win10本地连接检测
-     - +.msftconnecttest.com
-     - +.msftncsi.com
-#QQ登录
-     - localhost.ptlogin2.qq.com
-     - localhost.sec.qq.com
-     - +.qq.com
-     - +.tencent.com
-#Game
-#Steam
-     - +.steamcontent.com
-#Nintendo Switch
-     - +.srv.nintendo.net
-     - '*.n.n.srv.nintendo.net'
-     - +.cdn.nintendo.net
-#Sony PlayStation
-     - +.stun.playstation.net
-#Microsoft Xbox
-     - xbox.*.*.microsoft.com
-     - '*.*.xboxlive.com'
-     - xbox.*.microsoft.com
-     - xnotify.xboxlive.com
-#Wotgame
-     - +.battlenet.com.cn
-     - +.wotgame.cn
-     - +.wggames.cn
-     - +.wowsgame.cn
-     - +.wargaming.net
-#Golang
-     - proxy.golang.org
-#STUN
-     - stun.*.*
-     - stun.*.*.*
-     - +.stun.*.*
-     - +.stun.*.*.*
-     - +.stun.*.*.*.*
-     - +.stun.*.*.*.*.*
-#Linksys Router
-     - heartbeat.belkin.com
-     - '*.linksys.com'
-     - '*.linksyssmartwifi.com'
-#ASUS Router
-     - '*.router.asus.com'
-#Apple Software Update Service
-     - mesu.apple.com
-     - swscan.apple.com
-     - swquery.apple.com
-     - swdownload.apple.com
-     - swcdn.apple.com
-     - swdist.apple.com
-#Google
-     - lens.l.google.com
-     - stun.l.google.com
-     - na.b.g-tun.com
-#Netflix
-     - +.nflxvideo.net
-#FinalFantasy XIV Worldwide Server & CN Server
-     - '*.square-enix.com'
-     - '*.finalfantasyxiv.com'
-     - '*.ffxiv.com'
-     - '*.ff14.sdo.com'
-     - ff.dorado.sdo.com
-#Bilibili
-     - '*.mcdn.bilivideo.cn'
-#Disney Plus
-     - +.media.dssott.com
-#shark007 Codecs 
-     - shark007.net
-#Mijia
-     - Mijia Cloud
-#Xiaomi
-     - weatherapi.market.xiaomi.com
-#招商银行
-     - +.cmbchina.com
-     - +.cmbimg.com
-#AdGuard
-     - adguardteam.github.io
-     - adrules.top
-     - anti-ad.net
-     - local.adguard.org
-     - static.adtidy.org
-#迅雷
-     - +.sandai.net
-     - +.n0808.com
-#T-mobile and Ultra Mobile wifi calling
-     - +.3gppnetwork.org
-#UU Plugin
-     - +.uu.163.com
-     - ps.res.netease.com
-#向日葵远程控制
-     - +.oray.com
-     - WORKGROUP
+  enable: true # 关闭将使用系统 DNS
+  prefer-h3: true # 是否开启 DoH 支持 HTTP/3，将并发尝试
+  listen: 0.0.0.0:53 # 开启 DNS 服务器监听
+   ipv6: true # false 将返回 AAAA 的空结果
+   ipv6-timeout: 300 # 单位：ms，内部双栈并发时，向上游查询 AAAA 时，等待 AAAA 的时间，默认 100ms
+  # 用于解析 nameserver，fallback 以及其他 DNS 服务器配置的，DNS 服务域名
+  # 只能使用纯 IP 地址，可使用加密 DNS
   default-nameserver:
-     - 'https://8.8.4.4/dns-query#🔰 节点选择'
-     - 'https://1.0.0.1/dns-query#🔰 节点选择'
-     - 'https://9.9.9.11/dns-query#🔰 节点选择'
-  proxy-server-nameserver:          #【Meta专属】解析代理服务器域名的dns           # 不写时用nameserver解析
-     - https://1.0.0.1/dns-query
-     - https://8.8.4.4/dns-query
-     - https://9.9.9.11/dns-query
-     - https://185.222.222.222/dns-query
-     - tls://45.11.45.11
-  nameserver-policy:
-    "geosite:category-ads-all": rcode://success
-    "geosite:cn,private,apple": 
-      - https://223.5.5.5/dns-query
-      - https://1.12.12.12/dns-query
-      - tls://223.6.6.6
-      - tls://1.12.12.12
-  respect-rules: true
+    - 114.114.114.114
+    - 8.8.8.8
+    - tls://1.12.12.12:853
+    - tls://223.5.5.5:853
+    - system # append DNS server from system configuration. If not found, it would print an error log and skip.
+  enhanced-mode: fake-ip # or redir-host
+
+  fake-ip-range: 198.18.0.1/16 # fake-ip 池设置
+
+  # 配置不使用 fake-ip 的域名
+  fake-ip-filter:
+    - '*.lan'
+    - localhost.ptlogin2.qq.com
+    # fakeip-filter 为 rule-providers 中的名为 fakeip-filter 规则订阅，
+    # 且 behavior 必须为 domain/classical，当为 classical 时仅会生效域名类规则
+    - rule-set:fakeip-filter
+    # fakeip-filter 为 geosite 中名为 fakeip-filter 的分类（需要自行保证该分类存在）
+    - geosite:fakeip-filter
+  # 配置fake-ip-filter的匹配模式，默认为blacklist，即如果匹配成功不返回fake-ip
+  # 可设置为whitelist，即只有匹配成功才返回fake-ip
+  fake-ip-filter-mode: blacklist
+
+   use-hosts: true # 查询 hosts
+
+  # 配置后面的nameserver、fallback和nameserver-policy向dns服务器的连接过程是否遵守遵守rules规则
+  # 如果为false（默认值）则这三部分的dns服务器在未特别指定的情况下会直连
+  # 如果为true，将会按照rules的规则匹配链接方式（走代理或直连），如果有特别指定则任然以指定值为准
+  # 仅当proxy-server-nameserver非空时可以开启此选项, 强烈不建议和prefer-h3一起使用
+  # 此外，这三者配置中的dns服务器如果出现域名会采用default-nameserver配置项解析，也请确保正确配置default-nameserver
+  respect-rules: false
+
+  # DNS 主要域名配置
+  # 支持 UDP，TCP，DoT，DoH，DoQ
+  # 这部分为主要 DNS 配置，影响所有直连，确保使用对大陆解析精准的 DNS
   nameserver:
-     - 'https://9.9.9.11/dns-query#🔰 节点选择'
-     - 'https://185.222.222.222/dns-query#🔰 节点选择'
-     - 'https://1.0.0.1/dns-query#🔰 节点选择'
-     - 'https://8.8.4.4/dns-query#🔰 节点选择'
+    - 223.5.5.5 # default value
+    - 8.8.8.8 # default value
+    - tls://223.5.5.5:853 # DNS over TLS
+    - https://doh.pub/dns-query # DNS over HTTPS
+    - https://dns.alidns.com/dns-query#h3=true # 强制 HTTP/3，与 perfer-h3 无关，强制开启 DoH 的 HTTP/3 支持，若不支持将无法使用
+    - https://mozilla.cloudflare-dns.com/dns-query#h3=true # 指定策略组和使用 HTTP/3
+    - dhcp://en0 # dns from dhcp
+    - quic://dns.adguard.com:784 # DNS over QUIC
 
-  fallback:
-     - https://1.0.0.1/dns-query
-     - https://8.8.4.4/dns-query
-     - https://9.9.9.11/dns-query
-     - https://185.222.222.222/dns-query
-     - tls://1.0.0.1:853
-     - tls://8.8.4.4:853
-     - tls://9.9.9.9
-     - tls://45.11.45.11
-  fallback-filter:                   #回落DNS服务器过滤
-     geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
-     geoip-code: CN                   #geoip匹配区域设定
-     ipcidr:                          #列表中的ip使用fallback返回解析结果
-      - 240.0.0.0/4
-      - 127.0.0.1/32
-      - 0.0.0.0/32
-     domain:                          #列表中的域名使用fallback返回解析结果
-      - '+.google.com'
-      - '+.facebook.com'
-      - '+.youtube.com'
 
-  use-hosts: true
-  use-system-hosts: true
+  # 当配置 fallback 时，会查询 nameserver 中返回的 IP 是否为 CN，非必要配置
+  # 当不是 CN，则使用 fallback 中的 DNS 查询结果
+  # 确保配置 fallback 时能够正常查询
+   fallback:
+     - tcp://1.1.1.1
+     - tcp://8.8.8.8 
+  # 专用于节点域名解析的 DNS 服务器，非必要配置项，如果不填则遵循nameserver-policy、nameserver和fallback的配置
+   proxy-server-nameserver:
+     - https://dns.google/dns-query
+     - tls://one.one.one.one
 
-#ebpf配置
-ebpf:
-  auto-redir: # redirect 模式，仅支持 TCP
-    - eth0
-  redirect-to-tun: # UDP+TCP 使用该功能请勿启用 auto-route
-    - eth0
-    
+  # 专用于direct出口域名解析的 DNS 服务器，非必要配置项，如果不填则遵循nameserver-policy、nameserver和fallback的配置
+   direct-nameserver:
+     - system://
+  # direct-nameserver-follow-policy: false # 是否遵循nameserver-policy，默认为不遵守，仅当direct-nameserver不为空时生效
+
+  # 配置 fallback 使用条件
+   fallback-filter:
+     geoip: true # 配置是否使用 geoip
+     geoip-code: CN # 当 nameserver 域名的 IP 查询 geoip 库为 CN 时，不使用 fallback 中的 DNS 查询结果
+  #   配置强制 fallback，优先于 IP 判断，具体分类自行查看 geosite 库
+  #   geosite:
+  #     - gfw
+  #   如果不匹配 ipcidr 则使用 nameservers 中的结果
+     ipcidr:
+       - 240.0.0.0/4
+     domain:
+       - '+.google.com'
+       - '+.facebook.com'
+       - '+.youtube.com'
+
+  # 配置查询域名使用的 DNS 服务器
+  nameserver-policy:
+    #   'www.baidu.com': '114.114.114.114'
+    #   '+.internal.crop.com': '10.0.0.1'
+    "geosite:cn,private,apple":
+      - https://doh.pub/dns-query
+      - https://dns.alidns.com/dns-query
+    "geosite:category-ads-all": rcode://success
+
 sniffer:
   enable: true
   ## 对 redir-host 类型识别的流量进行强制嗅探
@@ -285,25 +199,26 @@ sniffer:
   ## 对所有未获取到域名的流量进行强制嗅探
   # parse-pure-ip: false
   # 是否使用嗅探结果作为实际访问，默认 true
-  sniff: # TLS 默认如果不配置 ports 默认嗅探 443
+  # 全局配置，优先级低于 sniffer.sniff 实际配置
+  override-destination: false
+  sniff: # TLS 和 QUIC 默认如果不配置 ports 默认嗅探 443
+    QUIC:
+      ports: [ 443 ]
     TLS:
       ports: [443, 8443]
-    
+
     # 默认嗅探 80
     HTTP: # 需要嗅探的端口
-      
       ports: [80, 8080-8880]
       # 可覆盖 sniffer.override-destination
       override-destination: true
   force-domain:
-    - '+.netflix.com'
-    - '+.nflxvideo.net'
-    - '+.amazonaws.com'
-    - '+.media.dssott.com'
-    - '+.v2ex.com'
-  # 对嗅探结果进行跳过
-  skip-domain:
-    - '+.apple.com'
-    - Mijia Cloud
-    - dlg.io.mi.com
+    - +.v2ex.com
+   skip-src-address: # 对于来源ip跳过嗅探
+     - 192.168.0.3/32
+   skip-dst-address: # 对于目标ip跳过嗅探
+     - 192.168.0.3/32
+  ## 对嗅探结果进行跳过
+   skip-domain:
+     - Mijia Cloud
   # 需要嗅探协议
