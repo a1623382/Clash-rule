@@ -49,14 +49,12 @@ ipv6: true # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS
 tcp-concurrent: true # TCP 并发连接所有 IP, 将使用最快握手的 TCP
 
 # 配置 WEB UI 目录，使用 http://{{external-controller}}/ui 访问
+external-controller: '127.0.0.1:7921'
 external-ui: /path/to/ui/folder/
 external-ui-name: xd
 # 目前支持下载zip,tgz格式的压缩包
 external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
 
-# 在RESTful API端口上开启DOH服务器
-# ！！！该URL不会验证secret， 如果开启请自行保证安全问题 ！！！
-external-doh-server: /dns-query
 
 # interface-name: en0 # 设置出口网卡
 
