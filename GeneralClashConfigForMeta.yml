@@ -9,7 +9,7 @@ mixed-port: 7890 # HTTP(S) 和 SOCKS 代理混合端口
 allow-lan: true # 允许局域网连接
 bind-address: "*" # 绑定 IP 地址，仅作用于 allow-lan 为 true，'*'表示所有地址
 authentication: # http,socks 入口的验证用户名，密码
-  - "username:password"
+  - "abcd:1234"
 skip-auth-prefixes: # 设置跳过验证的 IP 段
   - 127.0.0.1/8
   - ::1/128
@@ -48,12 +48,7 @@ ipv6: true # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS
 
 tcp-concurrent: true # TCP 并发连接所有 IP, 将使用最快握手的 TCP
 
-# 配置 WEB UI 目录，使用 http://{{external-controller}}/ui 访问
-external-controller: '127.0.0.1:7921'
-external-ui: /path/to/ui/folder/
-external-ui-name: xd
-# 目前支持下载zip,tgz格式的压缩包
-external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+
 
 
 # interface-name: en0 # 设置出口网卡
@@ -99,8 +94,8 @@ dns:
   enable: true # 关闭将使用系统 DNS
   prefer-h3: true # 是否开启 DoH 支持 HTTP/3，将并发尝试
   listen: 0.0.0.0:53 # 开启 DNS 服务器监听
-   ipv6: true # false 将返回 AAAA 的空结果
-   ipv6-timeout: 300 # 单位：ms，内部双栈并发时，向上游查询 AAAA 时，等待 AAAA 的时间，默认 100ms
+  ipv6: true # false 将返回 AAAA 的空结果
+  ipv6-timeout: 300 # 单位：ms，内部双栈并发时，向上游查询 AAAA 时，等待 AAAA 的时间，默认 100ms
   # 用于解析 nameserver，fallback 以及其他 DNS 服务器配置的，DNS 服务域名
   # 只能使用纯 IP 地址，可使用加密 DNS
   default-nameserver:
@@ -126,7 +121,7 @@ dns:
   # 可设置为whitelist，即只有匹配成功才返回fake-ip
   fake-ip-filter-mode: blacklist
 
-   use-hosts: true # 查询 hosts
+  use-hosts: true # 查询 hosts
 
   # 配置后面的nameserver、fallback和nameserver-policy向dns服务器的连接过程是否遵守遵守rules规则
   # 如果为false（默认值）则这三部分的dns服务器在未特别指定的情况下会直连
@@ -152,21 +147,21 @@ dns:
   # 当配置 fallback 时，会查询 nameserver 中返回的 IP 是否为 CN，非必要配置
   # 当不是 CN，则使用 fallback 中的 DNS 查询结果
   # 确保配置 fallback 时能够正常查询
-   fallback:
+  fallback:
      - tcp://1.1.1.1
      - tcp://8.8.8.8 
   # 专用于节点域名解析的 DNS 服务器，非必要配置项，如果不填则遵循nameserver-policy、nameserver和fallback的配置
-   proxy-server-nameserver:
+  proxy-server-nameserver:
      - https://dns.google/dns-query
      - tls://one.one.one.one
 
   # 专用于direct出口域名解析的 DNS 服务器，非必要配置项，如果不填则遵循nameserver-policy、nameserver和fallback的配置
-   direct-nameserver:
+  direct-nameserver:
      - system://
   # direct-nameserver-follow-policy: false # 是否遵循nameserver-policy，默认为不遵守，仅当direct-nameserver不为空时生效
 
   # 配置 fallback 使用条件
-   fallback-filter:
+  fallback-filter:
      geoip: true # 配置是否使用 geoip
      geoip-code: CN # 当 nameserver 域名的 IP 查询 geoip 库为 CN 时，不使用 fallback 中的 DNS 查询结果
   #   配置强制 fallback，优先于 IP 判断，具体分类自行查看 geosite 库
@@ -212,11 +207,11 @@ sniffer:
       override-destination: true
   force-domain:
     - +.v2ex.com
-   skip-src-address: # 对于来源ip跳过嗅探
+  skip-src-address: # 对于来源ip跳过嗅探
      - 192.168.0.3/32
-   skip-dst-address: # 对于目标ip跳过嗅探
+  skip-dst-address: # 对于目标ip跳过嗅探
      - 192.168.0.3/32
   ## 对嗅探结果进行跳过
-   skip-domain:
+  skip-domain:
      - Mijia Cloud
   # 需要嗅探协议
