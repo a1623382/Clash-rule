@@ -47,16 +47,24 @@ log-level: debug # 日志等级 silent/error/warning/info/debug
 ipv6: true # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
 
 
-external-controller: '127.0.0.1:7921' # RESTful API 监听地址
+external-controller: '127.0.0.1:9090'
 secret: "123456" # `Authorization:Bearer ${secret}`
+# 您可以将静态网页资源（如 clash-dashboard）放置在一个目录中，clash 将会服务于 `RESTful API/ui`
+# 参数应填写配置目录的相对路径或绝对路径。
+# http://127.0.0.1:9090/ui/#/
+# external-ui: folder
+# yacd面板：  https://github.com/haishanh/yacd
+# Razord面板：http://clash.razord.top/#/proxies
+# external-ui: dashboard
+
+# RESTful API 的口令 (可选)
+# secret: ""
+
+# 实验性功能
+experimental:
+  ignore-resolve-fail: true # 忽略 DNS 解析失败，默认值为 true
+
 tcp-concurrent: true # TCP 并发连接所有 IP, 将使用最快握手的 TCP
-
-# 配置 WEB UI 目录，使用 http://{{external-controller}}/ui 访问
-external-ui: /path/to/ui/folder/
-external-ui-name: xd
-# 目前支持下载zip,tgz格式的压缩包
-external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
-
 
 
 # interface-name: en0 # 设置出口网卡
