@@ -41,13 +41,14 @@ geo-update-interval: 24 # 更新间隔，单位：小时
 # - mph (from V2Ray, also `hybrid` in Xray)
 # geosite-matcher: succinct
 
+
 log-level: debug # 日志等级 silent/error/warning/info/debug
 
 ipv6: true # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
 
 
-external-controller: 0.0.0.0:9093 # RESTful API 监听地址
-external-controller-tls: 0.0.0.0:9443 # RESTful API HTTPS 监听地址，需要配置 tls 部分配置文件
+external-controller: '127.0.0.1:7921' # RESTful API 监听地址
+# external-controller-tls: 0.0.0.0:9443 # RESTful API HTTPS 监听地址，需要配置 tls 部分配置文件
 # secret: "123456" # `Authorization:Bearer ${secret}`
 
 # RESTful API CORS标头配置
