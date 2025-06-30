@@ -65,7 +65,7 @@ experimental:
   ignore-resolve-fail: true # 忽略 DNS 解析失败，默认值为 true
 
 tcp-concurrent: true # TCP 并发连接所有 IP, 将使用最快握手的 TCP
-
+unified-delay: true
 
 # interface-name: en0 # 设置出口网卡
 
