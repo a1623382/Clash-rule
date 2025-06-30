@@ -48,18 +48,8 @@ ipv6: true # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS
 
 
 external-controller: '127.0.0.1:7921' # RESTful API 监听地址
-# external-controller-tls: 0.0.0.0:9443 # RESTful API HTTPS 监听地址，需要配置 tls 部分配置文件
-# secret: "123456" # `Authorization:Bearer ${secret}`
-
-# RESTful API CORS标头配置
-external-controller-cors:
-  allow-origins:
-    - "*"
-  allow-private-network: true
-
-
-
-# tcp-concurrent: true # TCP 并发连接所有 IP, 将使用最快握手的 TCP
+secret: "123456" # `Authorization:Bearer ${secret}`
+tcp-concurrent: true # TCP 并发连接所有 IP, 将使用最快握手的 TCP
 
 # 配置 WEB UI 目录，使用 http://{{external-controller}}/ui 访问
 external-ui: /path/to/ui/folder/
