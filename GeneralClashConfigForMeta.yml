@@ -67,11 +67,6 @@ unified-delay: true
 
 # interface-name: en0 # 设置出口网卡
 
-# 全局 TLS 指纹，优先低于 proxy 内的 client-fingerprint
-# 可选： "chrome","firefox","safari","ios","random","none" options.
-# Utls is currently support TLS transport in TCP/grpc/WS/HTTP for VLESS/Vmess and trojan.
-global-client-fingerprint: firefox
-
 #  TCP keep alive interval
 disable-keep-alive: true #目前在android端强制为true
 keep-alive-idle: 15
@@ -153,7 +148,7 @@ dns:
     - 8.8.8.8
     - tls://1.12.12.12:853
     - tls://223.5.5.5:853
-  enhanced-mode: redir-host # or fake-ip
+  enhanced-mode: fake-ip # or redir-host
 
   fake-ip-range: 198.18.0.1/16 # fake-ip 池设置
 
@@ -215,9 +210,6 @@ dns:
      geoip: true # 配置是否使用 geoip
      geoip-code: CN # 当 nameserver 域名的 IP 查询 geoip 库为 CN 时，不使用 fallback 中的 DNS 查询结果
   #   配置强制 fallback，优先于 IP 判断，具体分类自行查看 geosite 库
-     geosite:
-       - gfw
-  #   如果不匹配 ipcidr 则使用 nameservers 中的结果
      ipcidr:
        - 240.0.0.0/4
      domain:
