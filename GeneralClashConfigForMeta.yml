@@ -233,22 +233,21 @@ dns:
       - https://doh.pub/dns-query
       - https://dns.alidns.com/dns-query
     "geosite:category-ads-all": rcode://success
-    "rule-set:Cats-Team-AdRules,AWAvenue-Ads-Rule,anti-ad": rcode://success
+    "rule-set:AdRules,AWAvenue,anti-ad": rcode://success
     "+.google.cn": [223.5.5.5, https://dns.alidns.com/dns-query]
     ## global，dns 为 rule-providers 中的名为 global 和 dns 规则订阅，
     ## 且 behavior 必须为 domain/classical，当为 classical 时仅会生效域名类规则
     # "rule-set:global,dns": 8.8.8.8
 rule-providers:
-  # [新增] 预编译的二进制去广告大数据库
-  anti-ad-mrs:
+  anti-ad:
     type: http
     behavior: domain
-    format: mrs  # 核心参数：告诉内核这是二进制文件
+    format: mrs  
     url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-ad.github.io/master/docs/mihomo.mrs"
     path: "./rule_provider/anti-ad.mrs"
     interval: 86400
 
-  AWAvenue-mrs:
+  AWAvenue:
     type: http
     behavior: domain
     format: mrs
@@ -256,7 +255,7 @@ rule-providers:
     path: "./rule_provider/AWAvenue.mrs"
     interval: 86400
 
-  adrules-mrs:
+  AdRules:
     type: http
     behavior: domain
     format: mrs
