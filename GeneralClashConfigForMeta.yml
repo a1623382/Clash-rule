@@ -237,3 +237,28 @@ dns:
     ## global，dns 为 rule-providers 中的名为 global 和 dns 规则订阅，
     ## 且 behavior 必须为 domain/classical，当为 classical 时仅会生效域名类规则
     # "rule-set:global,dns": 8.8.8.8
+rule-providers:
+  # [新增] 预编译的二进制去广告大数据库
+  anti-ad-mrs:
+    type: http
+    behavior: domain
+    format: mrs  # 核心参数：告诉内核这是二进制文件
+    url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-ad.github.io/master/docs/mihomo.mrs"
+    path: "./rule_provider/anti-ad.mrs"
+    interval: 86400
+
+  AWAvenue-mrs:
+    type: http
+    behavior: domain
+    format: mrs
+    url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.mrs"
+    path: "./rule_provider/AWAvenue.mrs"
+    interval: 86400
+
+  adrules-mrs:
+    type: http
+    behavior: domain
+    format: mrs
+    url: "https://adrules.top/adrules-mihomo.mrs"
+    path: "./rule_provider/adrules.mrs"
+    interval: 86400
